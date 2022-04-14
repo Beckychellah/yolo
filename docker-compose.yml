@@ -22,5 +22,29 @@ services:
     depends_on:
       - mongo_db
 
+  client:
+    container_name: yolomy_client
+    restart: unless-stopped
+    build: client/
+    ports:
+      - 3000:3000
+    networks:
+      - yolomy
+  
+  backend:
+    container_name: yolomy_backend
+    restart: unless-stopped
+    build: backend/
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongo_db
+    networks:
+      - yolomy
+
+networks:
+  yolomy:
+    driver: bridge
+
 volumes:
   mongo_db: {}
