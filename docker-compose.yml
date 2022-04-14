@@ -33,5 +33,9 @@ services:
     networks:
       - yolo
 
+networks:
+  yolo:
+    driver: bridge
+          
 volumes:
   mongo_db: {}
