@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:17.8.0
+FROM node:14-alpine
 
 LABEL Maintainer Becky
 
