@@ -6,45 +6,32 @@ services:
     container_name: db_container
     image: mongo:latest
     restart: always
+    ports:
+      - 27017:27017
     volumes: 
       - mongo_db:/data/db
-
-  #node services
-  api:
-    build: .
-    ports:
-      - 3000:3000
-    environment:
-      PORT: 3000
-      MONGODB_URI: mongodb://mongo_db:27017
-      DB_NAME: yolo_db
-      NAME: yolo
-    depends_on:
-      - mongo_db
-
+    networks:
+      - yolo
+  
   client:
-    container_name: yolomy_client
-    restart: unless-stopped
+    container_name: yolo_client
+    restart: always
     build: client/
     ports:
       - 3000:3000
     networks:
-      - yolomy
-  
+      - yolo
+
   backend:
-    container_name: yolomy_backend
-    restart: unless-stopped
+    container_name: yolo_backend
+    restart: always
     build: backend/
     ports:
       - 5000:5000
     depends_on:
       - mongo_db
     networks:
-      - yolomy
-
-networks:
-  yolomy:
-    driver: bridge
+      - yolo
 
 volumes:
   mongo_db: {}
